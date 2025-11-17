@@ -5,7 +5,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">HAKI & JESSIE</div>
+                <div class="sidebar-brand-text mx-3">Stock Opname Hamada</div>
             </a>
 
             <!-- Divider -->
@@ -18,31 +18,175 @@
                     <span>Dashboard</span></a>
             </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+            @if (auth()->user()->role == 'owner')
+                <!-- Nav Item - Monitoring -->
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">
+                        <i class="fas fa-fw fa-desktop"></i>
+                        <span>Monitoring Stock</span></a>
+                </li>
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Master Data
-            </div>
+            
+                <!-- Nav Item - Management User -->
+                <li class="nav-item">
+                    <a class="nav-link" href="charts.html">
+                        <i class="fas fa-fw fa-users"></i>
+                        <span>Management User</span></a>
+                </li>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-database"></i>
-                    <span>Master Data</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        {{-- <h6 class="collapse-header"></h6> --}} 
-                        <a class="collapse-item" href="buttons.html">Store</a>
-                        <a class="collapse-item" href="cards.html">Products</a>
-                    </div>
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Master Data
                 </div>
-            </li>
 
-            <!-- Heading -->
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-database"></i>
+                        <span>Master Data</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            {{-- <h6 class="collapse-header"></h6> --}} 
+                            <a class="collapse-item" href="buttons.html">Store</a>
+                            <a class="collapse-item" href="buttons.html">Categories</a>
+                            <a class="collapse-item" href="cards.html">Products</a>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Report
+                </div>
+
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#report"
+                        aria-expanded="true" aria-controls="report">
+                        <i class="fas fa-fw fa-file"></i>
+                        <span>Report Data</span>
+                    </a>
+                    <div id="report" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            {{-- <h6 class="collapse-header"></h6> --}} 
+                            <a class="collapse-item" href="buttons.html">Daily Report</a>
+                            <a class="collapse-item" href="buttons.html">Monthly Report</a>
+                            <a class="collapse-item" href="cards.html">Expedition Recap</a>
+                        </div>
+                    </div>
+                </li>
+            @else
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Master Data
+                </div>
+
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-database"></i>
+                        <span>Master Data</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            {{-- <h6 class="collapse-header"></h6> --}} 
+                            <a class="collapse-item" href="buttons.html">Store</a>
+                            <a class="collapse-item" href="buttons.html">Categories</a>
+                            <a class="collapse-item" href="cards.html">Products</a>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Transaction Stock
+                </div>
+
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#transaction"
+                        aria-expanded="true" aria-controls="transaction">
+                        <i class="fas fa-fw fa-inbox"></i>
+                        <span>Transaction Stock</span>
+                    </a>
+                    <div id="transaction" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            {{-- <h6 class="collapse-header"></h6> --}} 
+                            <a class="collapse-item" href="cards.html">Opening Stock</a>
+                            <a class="collapse-item" href="buttons.html">Stock IN</a>
+                            <a class="collapse-item" href="buttons.html">Stock OUT</a>
+                            <a class="collapse-item" href="cards.html">Stock ADJUST</a>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Notes
+                </div>
+
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#notes"
+                        aria-expanded="true" aria-controls="notes">
+                        <i class="fas fa-fw fa-clipboard"></i>
+                        <span>Notes</span>
+                    </a>
+                    <div id="notes" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            {{-- <h6 class="collapse-header"></h6> --}} 
+                            <a class="collapse-item" href="buttons.html">Daily Notes</a>
+                            <a class="collapse-item" href="cards.html">Expedition</a>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Report
+                </div>
+
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#report"
+                        aria-expanded="true" aria-controls="report">
+                        <i class="fas fa-fw fa-file"></i>
+                        <span>Report Data</span>
+                    </a>
+                    <div id="report" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            {{-- <h6 class="collapse-header"></h6> --}} 
+                            <a class="collapse-item" href="buttons.html">Daily Report</a>
+                            <a class="collapse-item" href="buttons.html">Monthly Report</a>
+                            <a class="collapse-item" href="cards.html">Expedition Recap</a>
+                        </div>
+                    </div>
+                </li>
+
+            @endif
+
+            {{-- <!-- Heading -->
             <div class="sidebar-heading">
                 Transaction
             </div>
@@ -124,7 +268,7 @@
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Tables</span></a>
-            </li>
+            </li> --}}
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
