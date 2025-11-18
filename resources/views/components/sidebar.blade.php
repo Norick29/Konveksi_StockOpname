@@ -1,11 +1,10 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">Stock Opname Hamada</div>
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+                <img src="{{ asset('image/logo1.png') }}" 
+                alt="Logo" style="width: 50px; height:auto;">
+                <div class="sidebar-brand-text mx-3">Stock Opname</div>
             </a>
 
             <!-- Divider -->
@@ -29,9 +28,9 @@
             
                 <!-- Nav Item - Management User -->
                 <li class="nav-item">
-                    <a class="nav-link" href="charts.html">
+                    <a class="nav-link" href="{{ route('users.index') }}">
                         <i class="fas fa-fw fa-users"></i>
-                        <span>Management User</span></a>
+                        <span>User Management </span></a>
                 </li>
 
                 <!-- Divider -->
