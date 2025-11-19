@@ -39,7 +39,7 @@ class UserController extends Controller
         $user = User::findOrFail($id_user);
 
         if ($id_user == Auth::id() && $request->role !== $user->role) {
-            return back()->with('error', 'You cannot change your own role.');
+            return redirect()->back()->with('error', 'You cannot change your own role.');
         }
 
         $validated = $request->validate([
@@ -67,7 +67,7 @@ class UserController extends Controller
     {
         if ($id_user == Auth::id()) 
         {
-            return back()->with('error', 'You cannot delete your own account.');
+            return redirect()->back()->with('error', 'You cannot delete your own account.');
         }
         
         $user = User::findOrFail($id_user);
