@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/stores', [App\Http\Controllers\TokoController::class, 'index'])->name('stores.index');
     Route::get('/categories', [App\Http\Controllers\KategoriController::class, 'index'])->name('categories.index');
+    Route::get('/product', [App\Http\Controllers\ProductController::class, 'index'])->name('product.index');
 });
 
 Route::middleware(['auth', OwnerMiddleware::class])->group(function () {
@@ -38,6 +39,12 @@ Route::middleware(['auth', AdminOnly::class])->group(function () {
     Route::post('/categories', [App\Http\Controllers\KategoriController::class, 'store'])->name('categories.store');
     Route::put('/categories/{id_kategori}', [App\Http\Controllers\KategoriController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{id_kategori}', [App\Http\Controllers\KategoriController::class, 'destroy'])->name('categories.destroy');
+
+    Route::post('/product', [App\Http\Controllers\ProductController::class, 'store'])->name('product.store');
+    Route::put('/product/{id_produk}', [App\Http\Controllers\ProductController::class, 'update'])->name('product.update');
+    Route::delete('/product/{id_produk}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('product.destroy');
+    Route::resource('opening-stock', App\Http\Controllers\OpeningStokController::class)
+        ->only(['index', 'store', 'destroy', 'update']);
 });
 
 

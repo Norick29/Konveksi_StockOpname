@@ -53,7 +53,7 @@
                             {{-- <h6 class="collapse-header"></h6> --}} 
                             <a class="collapse-item" href="{{ route('stores.index') }}">Store</a>
                             <a class="collapse-item" href="{{ route('categories.index') }}">Categories</a>
-                            <a class="collapse-item" href="cards.html">Products</a>
+                            <a class="collapse-item" href="{{ route('product.index') }}">Products</a>
                         </div>
                     </div>
                 </li>
@@ -103,7 +103,7 @@
                             {{-- <h6 class="collapse-header"></h6> --}} 
                             <a class="collapse-item" href="{{ route('stores.index') }}">Store</a>
                             <a class="collapse-item" href="{{ route('categories.index') }}">Categories</a>
-                            <a class="collapse-item" href="cards.html">Products</a>
+                            <a class="collapse-item" href="{{ route('product.index') }}">Products</a>
                         </div>
                     </div>
                 </li>
@@ -126,7 +126,7 @@
                     <div id="transaction" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             {{-- <h6 class="collapse-header"></h6> --}} 
-                            <a class="collapse-item" href="cards.html">Opening Stock</a>
+                            <a class="collapse-item" href="{{ route('opening-stock.index') }}">Opening Stock</a>
                             <a class="collapse-item" href="buttons.html">Stock IN</a>
                             <a class="collapse-item" href="buttons.html">Stock OUT</a>
                             <a class="collapse-item" href="cards.html">Stock ADJUST</a>
@@ -153,7 +153,7 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             {{-- <h6 class="collapse-header"></h6> --}} 
                             <a class="collapse-item" href="buttons.html">Daily Notes</a>
-                            <a class="collapse-item" href="cards.html">Expedition</a>
+                            <a class="collapse-item" href="cards.html">Shipments</a>
                         </div>
                     </div>
                 </li>
@@ -178,7 +178,7 @@
                             {{-- <h6 class="collapse-header"></h6> --}} 
                             <a class="collapse-item" href="buttons.html">Daily Report</a>
                             <a class="collapse-item" href="buttons.html">Monthly Report</a>
-                            <a class="collapse-item" href="cards.html">Expedition Recap</a>
+                            <a class="collapse-item" href="cards.html">Shipments Recap</a>
                         </div>
                     </div>
                 </li>
