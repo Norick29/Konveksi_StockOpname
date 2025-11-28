@@ -127,8 +127,8 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             {{-- <h6 class="collapse-header"></h6> --}} 
                             <a class="collapse-item" href="{{ route('opening-stock.index') }}">Opening Stock</a>
-                            <a class="collapse-item" href="buttons.html">Stock IN</a>
-                            <a class="collapse-item" href="buttons.html">Stock OUT</a>
+                            <a class="collapse-item" href="{{ route('stock-in.index') }}">Stock IN</a>
+                            <a class="collapse-item" href="{{ route('stock-out.index') }}">Stock OUT</a>
                             <a class="collapse-item" href="cards.html">Stock ADJUST</a>
                         </div>
                     </div>

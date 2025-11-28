@@ -4,7 +4,7 @@
 
 <div class="container-fluid">
 
-    <h1 class="h3 mb-2 text-gray-800">Stock IN</h1>
+    <h1 class="h3 mb-2 text-gray-800">Stock OUT</h1>
 
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show">
@@ -13,10 +13,11 @@
         </div>
     @endif
 
-    {{-- FILTER --}}
+    {{-- Filter --}}
     <div class="card shadow mb-4">
         <div class="card-body">
-            <form method="GET" >
+
+            <form method="GET" action="">
 
                 <div class="row">
 
@@ -66,17 +67,20 @@
 
                 </div>
             </form>
+
         </div>
     </div>
 
-    {{-- TABLE --}}
+    {{-- Table --}}
     <div class="card shadow mb-4">
         <div class="card-header d-flex justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Stock IN List</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Stock OUT List</h6>
 
-            @if (auth()->user()->role == 'admin')
-            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createStockInModal">
-                <i class="fas fa-plus"></i> Add Stock IN
+            @if(auth()->user()->role == 'admin')
+            <button class="btn btn-primary btn-sm"
+                    data-toggle="modal"
+                    data-target="#createStockOutModal">
+                <i class="fas fa-plus"></i> Add Stock OUT
             </button>
             @endif
         </div>
@@ -101,7 +105,7 @@
                     </thead>
 
                     <tbody>
-                        @foreach($stok as $s)
+                        @forelse($stok as $s)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $s->produk->sku }}</td>
@@ -112,32 +116,30 @@
                             <td>{{ $s->user->name }}</td>
 
                             @if(auth()->user()->role == 'admin')
-                            <td>
-                                <button class="btn btn-warning btn-sm"
-                                    data-toggle="modal"
-                                    data-target="#editStockInModal{{ $s->id_stok_harian }}">
-                                    <i class="fas fa-edit"></i>
-                                </button>
+                                <td>
+                                    <button class="btn btn-warning btn-sm"
+                                        data-toggle="modal"
+                                        data-target="#editStockOutModal{{ $s->id_stok_harian }}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
 
-                                <button class="btn btn-danger btn-sm"
-                                    data-toggle="modal"
-                                    data-target="#deleteStockInModal"
-                                    data-action="{{ route('stock-in.destroy', $s->id_stok_harian) }}"
-                                    data-name="{{ $s->produk->sku }}">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
+                                    <button class="btn btn-danger btn-sm"
+                                        data-toggle="modal"
+                                        data-target="#deleteStockOutModal"
+                                        data-action="{{ route('stock-out.destroy', $s->id_stok_harian) }}"
+                                        data-name="{{ $s->produk->sku }}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
                             @endif
                         </tr>
-                        @endforeach
-
-                        @if($stok->count() == 0)
+                        @empty
                         <tr>
-                            <td colspan="8" class="text-muted">No data available</td>
+                            <td colspan="7" class="text-muted">No Stock OUT found.</td>
                         </tr>
-                        @endif
-
+                        @endforelse
                     </tbody>
+
                 </table>
 
             </div>
@@ -146,8 +148,8 @@
 
 </div>
 
-@include('modul.transaction.in.modal-create')
-@include('modul.transaction.in.modal-edit')
-@include('modul.transaction.in.modal-delete')
+@include('modul.transaction.outt.modal-create')
+@include('modul.transaction.outt.modal-edit')
+@include('modul.transaction.outt.modal-delete')
 
 @endsection

@@ -45,6 +45,8 @@ Route::middleware(['auth', AdminOnly::class])->group(function () {
     Route::delete('/product/{id_produk}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('product.destroy');
     Route::resource('opening-stock', App\Http\Controllers\OpeningStokController::class)
         ->only(['index', 'store', 'destroy', 'update']);
+    Route::resource('stock-in', App\Http\Controllers\StockIn::class);
+    Route::resource('stock-out', App\Http\Controllers\StockOut::class);
 });
 
 

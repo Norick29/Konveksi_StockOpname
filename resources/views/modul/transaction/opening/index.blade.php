@@ -53,7 +53,7 @@
                     </button>
 
                     <a href="{{ route('opening-stock.index') }}" class="btn btn-secondary btn-block">
-                        <i class="fas fa-redo"></i> Reset
+                        <i class="fas fa-undo"></i> 
                     </a>
                 </div>
 
