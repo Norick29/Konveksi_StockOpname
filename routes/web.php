@@ -47,6 +47,7 @@ Route::middleware(['auth', AdminOnly::class])->group(function () {
         ->only(['index', 'store', 'destroy', 'update']);
     Route::resource('stock-in', App\Http\Controllers\StockIn::class);
     Route::resource('stock-out', App\Http\Controllers\StockOut::class);
+    Route::resource('stock-adjust', App\Http\Controllers\StockAdjust::class);
 });
 
 

@@ -129,7 +129,7 @@
                             <a class="collapse-item" href="{{ route('opening-stock.index') }}">Opening Stock</a>
                             <a class="collapse-item" href="{{ route('stock-in.index') }}">Stock IN</a>
                             <a class="collapse-item" href="{{ route('stock-out.index') }}">Stock OUT</a>
-                            <a class="collapse-item" href="cards.html">Stock ADJUST</a>
+                            <a class="collapse-item" href="{{ route('stock-adjust.index') }}">Stock ADJUST</a>
                         </div>
                     </div>
                 </li>
