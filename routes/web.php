@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\AdminOnly;
+use App\Http\Controllers\DailyReport;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\OwnerMiddleware;
-use App\Http\Middleware\AdminOnly;
+use App\Http\Controllers\ProfileController;
 
 
 Route::get('/', function () {
@@ -43,11 +44,14 @@ Route::middleware(['auth', AdminOnly::class])->group(function () {
     Route::post('/product', [App\Http\Controllers\ProductController::class, 'store'])->name('product.store');
     Route::put('/product/{id_produk}', [App\Http\Controllers\ProductController::class, 'update'])->name('product.update');
     Route::delete('/product/{id_produk}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('product.destroy');
-    Route::resource('opening-stock', App\Http\Controllers\OpeningStokController::class)
-        ->only(['index', 'store', 'destroy', 'update']);
+    Route::resource('opening-stock', App\Http\Controllers\OpeningStokController::class)->only(['index', 'store', 'destroy', 'update']);
     Route::resource('stock-in', App\Http\Controllers\StockIn::class);
     Route::resource('stock-out', App\Http\Controllers\StockOut::class);
     Route::resource('stock-adjust', App\Http\Controllers\StockAdjust::class);
+    Route::resource('shipments', App\Http\Controllers\Shipments::class)->only(['index', 'store', 'destroy', 'update']);
+    Route::get('/daily-report', [DailyReport::class, 'index'])->name('daily-report.index');
+    Route::post('/daily-report/generate', [DailyReport::class, 'generate'])->name('daily-report.generate');
+    Route::get('/monthly-report', [App\Http\Controllers\MonthlyReport::class, 'index'])->name('monthly-report.index');
 });
 
 

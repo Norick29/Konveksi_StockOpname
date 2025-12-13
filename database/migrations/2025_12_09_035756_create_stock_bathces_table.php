@@ -11,22 +11,27 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stok_harians', function (Blueprint $table) {
-            $table->id('id_stok_harian');
+        Schema::create('stok_bathces', function (Blueprint $table) {
+            $table->id('id_batch');
+
+            // Relasi produk & toko
             $table->unsignedBigInteger('id_produk');
             $table->unsignedBigInteger('id_toko');
-            $table->unsignedBigInteger('id_user');
-            $table->enum('type', ['IN', 'OUT', 'ADJUST']);
-            $table->string('adjust_type')->nullable(); // IN / OUT
-            $table->integer('quantity');
-            $table->string('note')->nullable();
-            $table->date('transaction_date');
-            $table->integer('quantity_used')->default(0);
+
+            // Berhubungan dengan proses sumber (opening/in)
+            $table->string('sumber'); // 'opening' atau 'in'
+            $table->unsignedBigInteger('id_sumber'); // id stok_bulan atau stok_harian
+
+            // Data batch
+            $table->integer('qty_awal');  // jumlah awal batch
+            $table->integer('qty_sisa');  // sisa batch saat FIFO berjalan
+            $table->date('tanggal_masuk'); // tanggal masuk batch
+
             $table->timestamps();
 
+            // Foreign key (jika tabel ready)
             $table->foreign('id_produk')->references('id_produk')->on('produks')->onDelete('cascade');
             $table->foreign('id_toko')->references('id_toko')->on('tokos')->onDelete('cascade');
-            $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');
         });
     }
 
@@ -35,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stok_harians');
+        Schema::dropIfExists('stock_bathces');
     }
 };

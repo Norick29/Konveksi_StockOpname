@@ -14,9 +14,11 @@ class stok_harian extends Model
         'id_toko',
         'id_user',
         'type',
+        'adjust_type',
         'quantity',
         'note',
         'transaction_date',
+        'quantity_used',
     ];
 
     public function produk()

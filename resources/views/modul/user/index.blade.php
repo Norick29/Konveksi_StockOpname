@@ -61,14 +61,16 @@
                                     <i class="fas fa-edit"></i>
                                 </button>
 
-                                <button type="button"
-                                    class="btn btn-danger btn-sm"
-                                    data-toggle="modal"
-                                    data-target="#deleteConfirmModal"
-                                    data-action="{{ route('users.destroy', $user->id_user) }}"
-                                    data-name="{{ $user->name }}">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                                @if(auth()->user()->id_user != $user->id_user)
+                                    <button type="button"
+                                        class="btn btn-danger btn-sm"
+                                        data-toggle="modal"
+                                        data-target="#deleteConfirmModal"
+                                        data-action="{{ route('users.destroy', $user->id_user) }}"
+                                        data-name="{{ $user->name }}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                @endif
  
                             </td>
                         </tr>

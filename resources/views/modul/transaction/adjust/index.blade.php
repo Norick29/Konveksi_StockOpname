@@ -98,12 +98,10 @@
                             <th>No</th>
                             <th>Product</th>
                             <th>Store</th>
+                            <th>Type</th>
                             <th>Qty</th>
                             <th>Date</th>
                             <th>Note</th>
-                            @if(auth()->user()->role == 'admin')
-                                <th width="15%">Actions</th>
-                            @endif
                         </tr>
                     </thead>
 
@@ -114,28 +112,19 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $s->produk->sku }}</td>
                             <td>{{ $s->toko->name }}</td>
+
+                            {{-- ADJUST TYPE --}}
+                            <td>
+                                @if($s->adjust_type == 'IN')
+                                    <span class="badge badge-success">IN (+)</span>
+                                @else
+                                    <span class="badge badge-danger">OUT (-)</span>
+                                @endif
+                            </td>
+
                             <td>{{ $s->quantity }}</td>
                             <td>{{ $s->transaction_date }}</td>
                             <td>{{ $s->note ?? '-' }}</td>
-
-                            @if(auth()->user()->role == 'admin')
-                            <td>
-                                <button class="btn btn-warning btn-sm"
-                                        data-toggle="modal"
-                                        data-target="#editAdjustModal{{ $s->id_stok_harian }}">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-
-                                <button class="btn btn-danger btn-sm"
-                                        data-toggle="modal"
-                                        data-target="#deleteAdjustModal"
-                                        data-action="{{ route('stock-adjust.destroy', $s->id_stok_harian) }}"
-                                        data-name="{{ $s->produk->sku }}">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                            @endif
-
                         </tr>
                         @empty
                         <tr>
@@ -144,7 +133,6 @@
                         @endforelse
 
                     </tbody>
-
                 </table>
 
             </div>
@@ -154,7 +142,7 @@
 </div>
 
 @include('modul.transaction.adjust.modal-create')
-@include('modul.transaction.adjust.modal-edit')
-@include('modul.transaction.adjust.modal-delete')
+{{-- @include('modul.transaction.adjust.modal-edit')
+@include('modul.transaction.adjust.modal-delete') --}}
 
 @endsection

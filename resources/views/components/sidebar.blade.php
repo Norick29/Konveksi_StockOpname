@@ -130,30 +130,7 @@
                             <a class="collapse-item" href="{{ route('stock-in.index') }}">Stock IN</a>
                             <a class="collapse-item" href="{{ route('stock-out.index') }}">Stock OUT</a>
                             <a class="collapse-item" href="{{ route('stock-adjust.index') }}">Stock ADJUST</a>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider">
-
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                    Notes
-                </div>
-
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#notes"
-                        aria-expanded="true" aria-controls="notes">
-                        <i class="fas fa-fw fa-clipboard"></i>
-                        <span>Notes</span>
-                    </a>
-                    <div id="notes" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            {{-- <h6 class="collapse-header"></h6> --}} 
-                            <a class="collapse-item" href="buttons.html">Daily Notes</a>
-                            <a class="collapse-item" href="cards.html">Shipments</a>
+                            <a class="collapse-item" href="{{ route('shipments.index') }}">Shipments</a>
                         </div>
                     </div>
                 </li>
@@ -176,9 +153,8 @@
                     <div id="report" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             {{-- <h6 class="collapse-header"></h6> --}} 
-                            <a class="collapse-item" href="buttons.html">Daily Report</a>
-                            <a class="collapse-item" href="buttons.html">Monthly Report</a>
-                            <a class="collapse-item" href="cards.html">Shipments Recap</a>
+                            <a class="collapse-item" href="{{ route('daily-report.index') }}">Daily Report</a>
+                            <a class="collapse-item" href="{{ route('monthly-report.index') }}">Monthly Report</a>
                         </div>
                     </div>
                 </li>

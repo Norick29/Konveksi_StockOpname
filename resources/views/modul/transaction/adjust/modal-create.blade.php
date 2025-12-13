@@ -12,6 +12,7 @@
 
                 <div class="modal-body">
 
+                    {{-- Product --}}
                     <div class="form-group">
                         <label>Product</label>
                         <select name="id_produk" class="form-control" required>
@@ -22,6 +23,7 @@
                         </select>
                     </div>
 
+                    {{-- Store --}}
                     <div class="form-group">
                         <label>Store</label>
                         <select name="id_toko" class="form-control" required>
@@ -32,16 +34,29 @@
                         </select>
                     </div>
 
+                    {{-- Adjust Type --}}
                     <div class="form-group">
-                        <label>Quantity Adjustment</label>
-                        <input type="number" name="quantity" class="form-control" min="1" required>
+                        <label>Adjustment Type</label>
+                        <select name="adjust_type" class="form-control" required>
+                            <option value="">Select Type</option>
+                            <option value="IN">IN (+) Add Stock</option>
+                            <option value="OUT">OUT (–) Reduce Stock</option>
+                        </select>
                     </div>
 
+                    {{-- Quantity --}}
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="number" name="quantity" min="1" class="form-control" required>
+                    </div>
+
+                    {{-- Date --}}
                     <div class="form-group">
                         <label>Date</label>
                         <input type="date" name="transaction_date" class="form-control" required>
                     </div>
 
+                    {{-- Note --}}
                     <div class="form-group">
                         <label>Note (Optional)</label>
                         <input type="text" name="note" class="form-control">

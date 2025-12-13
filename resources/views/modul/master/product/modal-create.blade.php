@@ -67,74 +67,34 @@
 {{-- Auto-generate SKU when category/color/size selected --}}
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const cat = document.getElementById('categorySelect');
-    const color = document.getElementById('colorSelect');
-    const size = document.getElementById('sizeSelect');
-    const skuInput = document.getElementById('skuInput');
 
-    function mapCategoryCode(opt) {
-        if (!opt) return '';
-        const dataCode = (opt.dataset.code || '').trim().toUpperCase();
-        if (dataCode === 'SS' || dataCode === 'LS') return dataCode;
-
-        const text = (opt.textContent || '').toLowerCase();
-        if (text.includes('short') || text.includes('short sleeve') || text.includes('ss')) return 'SS';
-        if (text.includes('long') || text.includes('long sleeve') || text.includes('ls')) return 'LS';
-
-        // fallback: first two letters of category name
-        return (opt.textContent || '').trim().slice(0, 2).toUpperCase();
-    }
-
-    function mapColorCode(val) {
-        if (!val) return '';
-        const v = val.toLowerCase();
-        if (v === 'Hitam' || v === 'Black') return 'HM';
-        if (v === 'Putih' || v === 'White') return 'PH';
-        // fallback: first two letters
-        return v.slice(0, 2).toUpperCase();
-    }
-
-    function mapSizeCode(val) {
-        if (!val) return '';
-        return val.toUpperCase(); // S, M, L, XL, XXL
-    }
+    const categorySelect = document.getElementById('categorySelect');
+    const colorSelect    = document.getElementById('colorSelect');
+    const sizeSelect     = document.getElementById('sizeSelect');
+    const skuInput       = document.getElementById('skuInput');
 
     function genSKU() {
-        if (!cat || !color || !size || !skuInput) return;
-        const catOpt = cat.options[cat.selectedIndex];
-        const catCode = mapCategoryCode(catOpt);
-        const colorCode = mapColorCode(color.value);
-        const sizeCode = mapSizeCode(size.value);
+        const categoryText = categorySelect.options[categorySelect.selectedIndex]?.text?.trim() || '';
+        const colorText    = colorSelect.value.trim();
+        const sizeText     = sizeSelect.value.trim();
 
-        if (catCode && colorCode && sizeCode) {
-            skuInput.value = `${catCode}-${colorCode}-${sizeCode}`;
+        if (categoryText && colorText && sizeText) {
+            // SKU full name (tanpa singkatan)
+            skuInput.value = `${categoryText}-${colorText}-${sizeText}`;
         } else {
             skuInput.value = '';
         }
     }
 
-    ['change','blur','keyup'].forEach(evt => {
-        if (cat) cat.addEventListener(evt, genSKU);
-        if (color) color.addEventListener(evt, genSKU);
-        if (size) size.addEventListener(evt, genSKU);
-    });
+    categorySelect.addEventListener('change', genSKU);
+    colorSelect.addEventListener('change', genSKU);
+    sizeSelect.addEventListener('change', genSKU);
 
-    // reset SKU when modal closed (if using bootstrap/jQuery)
-    if (window.jQuery) {
-        $('#createProductModal').on('hidden.bs.modal', function () {
-            const form = this.querySelector('form');
-            if (form) form.reset();
-            if (skuInput) skuInput.value = '';
-        });
-    } else {
-        // fallback: clear when modal hidden via data-dismiss buttons
-        document.querySelectorAll('#createProductModal [data-dismiss="modal"]').forEach(btn => {
-            btn.addEventListener('click', function () {
-                const form = document.querySelector('#createProductModal form');
-                if (form) form.reset();
-                if (skuInput) skuInput.value = '';
-            });
-        });
-    }
+    // Reset modal saat ditutup
+    $('#createProductModal').on('hidden.bs.modal', function () {
+        const form = this.querySelector('form');
+        if (form) form.reset();
+        skuInput.value = '';
+    });
 });
 </script>
