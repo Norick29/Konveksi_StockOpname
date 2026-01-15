@@ -38,33 +38,35 @@
                             <div class="col-md-7">
                                 <select name="items[0][id_produk]" class="form-control" required>
                                     <option value="">Pilih Produk</option>
-
+                            
                                     @php
                                         $sizeOrder = ['S','M','L','XL','XXL'];
                                     @endphp
-
+                            
                                     @foreach($produk->groupBy('kategori.name') as $kategori => $itemsKategori)
-                                        <optgroup label="{{ $kategori }}">
-
-                                            @foreach($itemsKategori->groupBy('color') as $color => $itemsColor)
-
+                            
+                                        @foreach($itemsKategori->groupBy('color') as $color => $itemsColor)
+                            
+                                            {{-- OPTGROUP = KATEGORI + WARNA --}}
+                                            <optgroup label="{{ $kategori }} ({{ $color }})">
+                            
                                                 @foreach(
                                                     $itemsColor->sortBy(fn($p) => array_search($p->size, $sizeOrder))
                                                     as $p
                                                 )
                                                     <option value="{{ $p->id_produk }}">
-                                                        {{ $color }} | Size {{ $p->size }} ({{ $p->sku }})
+                                                        Size {{ $p->size }} ({{ $p->sku }})
                                                     </option>
                                                 @endforeach
-
-                                            @endforeach
-
-                                        </optgroup>
+                            
+                                            </optgroup>
+                            
+                                        @endforeach
+                            
                                     @endforeach
-
                                 </select>
                             </div>
-
+                            
                             <div class="col-md-3">
                                 <input type="number"
                                     name="items[0][quantity]"

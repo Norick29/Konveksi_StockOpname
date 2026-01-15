@@ -13,36 +13,40 @@
                 <div class="modal-body">
 
                     {{-- Product --}}
-                   <div class="form-group">
-                        <label>Product</label>
-                        <select name="id_produk" class="form-control" required>
-                            <option value="">Select Product</option>
+                  <div class="form-group">
+    <label>Product</label>
+    <select name="id_produk" class="form-control" required>
+        <option value="">Select Product</option>
 
-                            @php
-                                $sizeOrder = ['S','M','L','XL','XXL'];
-                            @endphp
+        @php
+            $sizeOrder = ['S','M','L','XL','XXL'];
+        @endphp
 
-                            @foreach($produk->groupBy('kategori.name') as $kategori => $itemsKategori)
-                                <optgroup label="{{ $kategori }}">
+        @foreach($produk->groupBy('kategori.name') as $kategori => $itemsKategori)
 
-                                    @foreach($itemsKategori->groupBy('color') as $color => $itemsColor)
+            @foreach($itemsKategori->groupBy('color') as $color => $itemsColor)
 
-                                        @foreach(
-                                            $itemsColor->sortBy(fn($p) => array_search($p->size, $sizeOrder))
-                                            as $p
-                                        )
-                                            <option value="{{ $p->id_produk }}">
-                                                {{ $color }} | Size {{ $p->size }} ({{ $p->sku }})
-                                            </option>
-                                        @endforeach
+                {{-- OPTGROUP = KATEGORI + WARNA --}}
+                <optgroup label="{{ $kategori }} ({{ $color }})">
 
-                                    @endforeach
+                    @foreach(
+                        $itemsColor->sortBy(fn($p) => array_search($p->size, $sizeOrder))
+                        as $p
+                    )
+                        <option value="{{ $p->id_produk }}">
+                            Size {{ $p->size }} ({{ $p->sku }})
+                        </option>
+                    @endforeach
 
-                                </optgroup>
-                            @endforeach
+                </optgroup>
 
-                        </select>
-                    </div>
+            @endforeach
+
+        @endforeach
+
+    </select>
+</div>
+
 
                     {{-- Store --}}
                     <div class="form-group">

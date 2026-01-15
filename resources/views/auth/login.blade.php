@@ -5,8 +5,10 @@
         {{-- HEADER CARD --}}
         <div class="bg-blue-600 rounded-t-lg py-8 px-6 text-center">
             <x-application-logo class="h-32 mx-auto mb-3" />
-
-            <h1 class="text-black text-lg font-semibold leading-tight">
+            <h1 class="text-white text-lg font-semibold leading-tight">
+                PT. HAMADA KOLABORASI INDUSTRI
+            </h1>
+            <h1 class="text-white text-md">
                 Sistem Stock Opname
             </h1>
             <h1 class="text-blue-100 text-md">
