@@ -81,7 +81,7 @@
             <h6 class="m-0 font-weight-bold text-primary">Stock Adjust List</h6>
 
             @if(auth()->user()->role == 'admin')
-            <button class="btn btn-success btn-sm" 
+            <button class="btn btn-primary btn-sm" 
                     data-toggle="modal" 
                     data-target="#createAdjustModal">
                 <i class="fas fa-plus"></i> Adjust Stock

@@ -65,18 +65,20 @@
                     </label>
                 </div>
 
-                <div class="flex items-center justify-between mt-6">
-                    @if (Route::has('password.request'))
+                {{-- <div class="flex items-center justify-between mt-6"> --}}
+                    {{-- @if (Route::has('password.request'))
                         <a class="text-sm text-gray-600 hover:text-gray-900 underline"
                            href="{{ route('password.request') }}">
                             {{ __('Forgot your password?') }}
                         </a>
-                    @endif
+                    @endif --}}
 
-                    <x-primary-button>
-                        {{ __('Log in') }}
-                    </x-primary-button>
-                </div>
+                    <div class="mt-4">
+                        <x-primary-button class="w-full justify-center">
+                            {{ __('Log in') }}
+                        </x-primary-button>
+                    </div>
+                {{-- </div> --}}
 
             </form>
         </div>

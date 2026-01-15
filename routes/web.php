@@ -18,7 +18,7 @@ Route::get('/home', [App\Http\Controllers\Dashboard::class, 'index'])->middlewar
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::patch('/profile', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::patch('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
     Route::get('/stores', [App\Http\Controllers\TokoController::class, 'index'])->name('stores.index');
     Route::get('/categories', [App\Http\Controllers\KategoriController::class, 'index'])->name('categories.index');
     Route::get('/product', [App\Http\Controllers\ProductController::class, 'index'])->name('product.index');
@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/report/monthly/export', [App\Http\Controllers\MonthlyReport::class, 'generateMonthlyReport'])
     ->middleware('auth')
     ->name('report.monthly.export');
+    Route::get('/daily-report/pdf', [DailyReport::class, 'exportPdf'])->name('daily-report.pdf');
 });
 
 Route::middleware(['auth', OwnerMiddleware::class])->group(function () {
@@ -67,7 +68,6 @@ Route::middleware(['auth', AdminOnly::class])->group(function () {
     Route::resource('stock-in', App\Http\Controllers\StockIn::class);
     Route::resource('stock-out', App\Http\Controllers\StockOut::class);
     Route::resource('stock-adjust', App\Http\Controllers\StockAdjust::class);
-    Route::get('/daily-report/pdf', [DailyReport::class, 'exportPdf'])->name('daily-report.pdf');
     Route::post('/daily-report/out-summary', [DailyReport::class, 'outSummary'])->name('daily-report.out-summary');
     
 });

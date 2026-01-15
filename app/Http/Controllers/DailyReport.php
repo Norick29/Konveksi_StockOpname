@@ -181,24 +181,6 @@ public function generate(Request $request)
                 ]);
             }
         }
-        // Simpan shipment baru
-        if ($request->filled('shipments')) {
-            foreach ($request->shipments as $shipment) {
-                ekspedisi::create([
-                    'id_toko'       => $id_toko,
-                    'courier'       => $shipment['expedition'],
-                    'quantity'      => $shipment['qty'],
-                    'date'          => $date,
-                    'id_user'       => Auth::id(),
-
-                    // 🔥 ADMIN DISIMPAN DI SINI
-                    'press_admin'   => $request->press_admin,
-                    'resi_admin'    => $request->resi_admin,
-                    'packing_admin' => $request->packing_admin,
-                    'buang_admin'   => $request->buang_admin,
-                ]);
-            }
-        }
     }
 
     /*
@@ -255,6 +237,13 @@ public function generate(Request $request)
             'buang'     => $admin->buang_admin   ?? '-',
         ];
     }
+
+    session([
+        'daily-report' => [
+            'date'    => $date,
+            'reports' => $reports,
+        ]
+    ]);
 
     return view('modul.report.daily.result', [
         'date'    => $date,

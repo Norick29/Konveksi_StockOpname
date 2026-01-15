@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
-            <div class="modal-header bg-warning text-white">
+            <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title">Add Stock Adjustment</h5>
                 <button class="close text-white" data-dismiss="modal">×</button>
             </div>
@@ -13,13 +13,34 @@
                 <div class="modal-body">
 
                     {{-- Product --}}
-                    <div class="form-group">
+                   <div class="form-group">
                         <label>Product</label>
                         <select name="id_produk" class="form-control" required>
                             <option value="">Select Product</option>
-                            @foreach($produk as $p)
-                            <option value="{{ $p->id_produk }}">{{ $p->sku }}</option>
+
+                            @php
+                                $sizeOrder = ['S','M','L','XL','XXL'];
+                            @endphp
+
+                            @foreach($produk->groupBy('kategori.name') as $kategori => $itemsKategori)
+                                <optgroup label="{{ $kategori }}">
+
+                                    @foreach($itemsKategori->groupBy('color') as $color => $itemsColor)
+
+                                        @foreach(
+                                            $itemsColor->sortBy(fn($p) => array_search($p->size, $sizeOrder))
+                                            as $p
+                                        )
+                                            <option value="{{ $p->id_produk }}">
+                                                {{ $color }} | Size {{ $p->size }} ({{ $p->sku }})
+                                            </option>
+                                        @endforeach
+
+                                    @endforeach
+
+                                </optgroup>
                             @endforeach
+
                         </select>
                     </div>
 
@@ -66,7 +87,7 @@
 
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button class="btn btn-warning" type="submit">
+                    <button class="btn btn-primary" type="submit">
                         <i class="fas fa-save"></i> Save
                     </button>
                 </div>

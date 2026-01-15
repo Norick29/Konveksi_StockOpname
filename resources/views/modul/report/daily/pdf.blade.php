@@ -109,13 +109,16 @@
     </tbody>
 </table>
 
-<strong>Admin</strong>
-<p>
-Press: {{ $press ?? '-' }} <br>
-Resi: {{ $resi ?? '-' }} <br>
-Packing: {{ $packing ?? '-' }} <br>
-Buang Benang: {{ $buang ?? '-' }}
-</p>
+@foreach ($reports as $report)
+    <strong>{{ $report['store']->nama_toko }}</strong>
+    <h4>Admin</h4>
+    <p>
+        Press: {{ $report['press'] }} <br>
+        Resi: {{ $report['resi'] }} <br>
+        Packing: {{ $report['packing'] }} <br>
+        Buang Benang: {{ $report['buang'] }}
+    </p>
+@endforeach
 
 <hr>
 
