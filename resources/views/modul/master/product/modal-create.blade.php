@@ -36,14 +36,14 @@
 
                     <div class="form-group">
                         <label>Size</label>
-                        <select name="size" id="sizeSelect" class="form-control" required>
-                            <option value="">-- Select Size --</option>
-                            <option value="S">S</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
-                            <option value="XL">XL</option>
-                            <option value="XXL">XXL</option>
-                        </select>
+                        <div>
+                            @foreach(['S','M','L','XL','XXL'] as $size)
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="sizes[]" value="{{ $size }}" class="form-check-input">
+                                    <label class="form-check-label">{{ $size }}</label>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
 
                     <div class="form-group">

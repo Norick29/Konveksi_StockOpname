@@ -12,7 +12,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{ route('home') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -20,7 +20,7 @@
             @if (auth()->user()->role == 'owner')
                 <!-- Nav Item - Monitoring -->
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="{{ route('monitoring-stock.index') }}">
                         <i class="fas fa-fw fa-desktop"></i>
                         <span>Monitoring Stock</span></a>
                 </li>
@@ -76,9 +76,8 @@
                     <div id="report" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             {{-- <h6 class="collapse-header"></h6> --}} 
-                            <a class="collapse-item" href="buttons.html">Daily Report</a>
-                            <a class="collapse-item" href="buttons.html">Monthly Report</a>
-                            <a class="collapse-item" href="cards.html">Expedition Recap</a>
+                            <a class="collapse-item" href="{{ route('daily-report.index') }}">Daily Report</a>
+                            <a class="collapse-item" href="{{ route('monthly-report.index') }}">Monthly Report</a>
                         </div>
                     </div>
                 </li>
@@ -130,7 +129,6 @@
                             <a class="collapse-item" href="{{ route('stock-in.index') }}">Stock IN</a>
                             <a class="collapse-item" href="{{ route('stock-out.index') }}">Stock OUT</a>
                             <a class="collapse-item" href="{{ route('stock-adjust.index') }}">Stock ADJUST</a>
-                            <a class="collapse-item" href="{{ route('shipments.index') }}">Shipments</a>
                         </div>
                     </div>
                 </li>

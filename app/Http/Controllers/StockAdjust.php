@@ -13,20 +13,28 @@ use Carbon\Carbon;
 class StockAdjust extends Controller
 {
     public function index(Request $request)
-    {
-        $produk = Produk::orderBy('sku')->get();
-        $toko = Toko::orderBy('name')->get();
+{
+    $produk = Produk::orderBy('sku')->get();
+    $toko   = Toko::orderBy('name')->get();
 
-        $stok = stok_harian::where('type', 'ADJUST')
-            ->when($request->id_produk, fn($q) => $q->where('id_produk', $request->id_produk))
-            ->when($request->id_toko, fn($q) => $q->where('id_toko', $request->id_toko))
-            ->when($request->date, fn($q) => $q->whereDate('transaction_date', $request->date))
-            ->with(['produk', 'toko'])
-            ->orderBy('transaction_date', 'desc')
-            ->get();
+    $stok = stok_harian::where('type', 'ADJUST')
+        ->when($request->id_produk, fn($q) =>
+            $q->where('id_produk', $request->id_produk)
+        )
+        ->when($request->id_toko, fn($q) =>
+            $q->where('id_toko', $request->id_toko)
+        )
+        ->when($request->date, fn($q) =>
+            $q->whereDate('transaction_date', $request->date)
+        )
+        ->with(['produk', 'toko'])
+        ->orderBy('transaction_date', 'desc')
+        ->paginate(10);
 
-        return view('modul.transaction.adjust.index', compact('stok', 'produk', 'toko'));
-    }
+    return view('modul.transaction.adjust.index', compact(
+        'stok', 'produk', 'toko'
+    ));
+}
 
     public function store(Request $request)
     {
@@ -94,6 +102,18 @@ class StockAdjust extends Controller
                 return back()->with('error', 'Stock insufficient for FIFO adjust OUT!');
             }
         }
+
+        logActivity(
+            'ADJUST',
+            'STOCK ADJUST',
+            'Penyesuaian stok (' . $request->adjust_type . ')',
+            [
+                'id_produk' => $request->id_produk,
+                'id_toko'   => $request->id_toko,
+                'qty'       => $request->quantity,
+                'adjust'    => $request->adjust_type    
+            ]
+        );
 
         return back()->with('success', 'Stock Adjust processed successfully (FIFO Applied)!');
     }

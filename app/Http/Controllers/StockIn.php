@@ -8,24 +8,34 @@ use App\Models\produk;
 use App\Models\toko;
 use Illuminate\Support\Facades\Auth;
 use App\Models\StockBathces;
+use Carbon\Carbon;
 
 class StockIn extends Controller
 {
     public function index(Request $request)
-    {
-        $produk = Produk::orderBy('sku')->get();
-        $toko = Toko::orderBy('name')->get();
+{
+    $produk = Produk::orderBy('sku')->get();
+    $toko   = Toko::orderBy('name')->get();
 
-        $stok = stok_harian::where('type', 'IN')
-            ->when($request->id_produk, fn($q) => $q->where('id_produk', $request->id_produk))
-            ->when($request->id_toko, fn($q) => $q->where('id_toko', $request->id_toko))
-            ->when($request->date, fn($q) => $q->whereDate('transaction_date', $request->date))
-            ->with('produk', 'toko', 'user')
-            ->orderBy('transaction_date', 'desc')
-            ->get();
+    $date = $request->date ?? Carbon::today()->toDateString();
 
-        return view('modul.transaction.in.index', compact('stok', 'produk', 'toko'));
-    }
+    $stok = stok_harian::where('type', 'IN')
+        ->whereDate('transaction_date', $date)
+        ->when($request->id_produk, fn($q) =>
+            $q->where('id_produk', $request->id_produk)
+        )
+        ->when($request->id_toko, fn($q) =>
+            $q->where('id_toko', $request->id_toko)
+        )
+        ->with(['produk', 'toko', 'user'])
+        ->orderBy('transaction_date', 'desc')
+        ->paginate(10);
+
+    return view('modul.transaction.in.index', compact(
+        'stok', 'produk', 'toko', 'date'
+    ));
+}
+    
 
     /* ----------------------------------------------------------
      *  STORE (CREATE IN + CREATE BATCH FIFO)
@@ -33,36 +43,41 @@ class StockIn extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_produk' => 'required',
-            'id_toko'   => 'required',
-            'quantity'  => 'required|integer|min:1',
+            'id_toko' => 'required',
             'transaction_date' => 'required|date',
+            'items' => 'required|array|min:1',
+            'items.*.id_produk' => 'required',
+            'items.*.quantity' => 'required|integer|min:1',
         ]);
 
-        // 1. Simpan ke stok_harian
-        $in = stok_harian::create([
-            'id_produk' => $request->id_produk,
-            'id_toko'   => $request->id_toko,
-            'id_user'   => Auth::id(),
-            'type'      => 'IN',
-            'quantity'  => $request->quantity,
-            'note'      => $request->note,
-            'transaction_date' => $request->transaction_date,
-        ]);
+        foreach ($request->items as $item) {
 
-        // 2. Buat batch baru (FIFO)
-        StockBathces::create([
-            'id_produk'     => $request->id_produk,
-            'id_toko'       => $request->id_toko,
-            'sumber'        => 'in',
-            'id_sumber'     => $in->id_stok_harian,
-            'qty_awal'      => $request->quantity,
-            'qty_sisa'      => $request->quantity,
-            'tanggal_masuk' => $request->transaction_date,
-        ]);
+            // 1. Simpan ke stok_harian
+            $in = stok_harian::create([
+                'id_produk' => $item['id_produk'],
+                'id_toko'   => $request->id_toko,
+                'id_user'   => Auth::id(),
+                'type'      => 'IN',
+                'quantity'  => $item['quantity'],
+                'note'      => $request->note,
+                'transaction_date' => $request->transaction_date,
+            ]);
+
+            // 2. Buat batch baru (FIFO)
+            StockBathces::create([
+                'id_produk'     => $item['id_produk'],
+                'id_toko'       => $request->id_toko,
+                'sumber'        => 'in',
+                'id_sumber'     => $in->id_stok_harian,
+                'qty_awal'      => $item['quantity'],
+                'qty_sisa'      => $item['quantity'],
+                'tanggal_masuk' => $request->transaction_date,
+            ]);
+        }
 
         return back()->with('success', 'Stock IN successfully recorded!');
     }
+
 
     /* ----------------------------------------------------------
      *  UPDATE (UPDATE HISTORI + UPDATE BATCH)

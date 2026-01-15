@@ -18,6 +18,11 @@ return new class extends Migration
             $table->date('date');
             $table->string('courier');      // contoh: SPX, JNT, JNE, Shopee Express
             $table->integer('quantity');    // total pcs dikirim via kurir ini
+            $table->string('press_admin')->nullable();
+            $table->string('resi_admin')->nullable();
+            $table->string('packing_admin')->nullable();
+            $table->string('buang_admin')->nullable();
+
             $table->timestamps();
 
             $table->foreign('id_toko')->references('id_toko')->on('tokos')->onDelete('cascade');

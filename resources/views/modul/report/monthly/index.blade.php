@@ -36,6 +36,13 @@
                 <i class="fas fa-undo"></i> Reset
             </a>
         </div>
+
+        <div class="col-md-3 d-flex align-items-end mt-3">
+            <a href="{{ route('report.monthly.export', ['month' => $month, 'id_toko' => request('id_toko')]) }}"
+                class="btn btn-success">
+                Export Excel
+            </a>
+        </div>
     </form>
 
     <div class="card shadow">
@@ -74,7 +81,16 @@
                     @endforelse
                 </tbody>
             </table>
+            <div class="row mt-3">
+                    <div class="col-md-6 text-muted">
+                        Showing {{ $report->firstItem() }} to {{ $report->lastItem() }}
+                        of {{ $report->total() }} entries
+                    </div>
 
+                    <div class="col-md-6 d-flex justify-content-end">
+                        {{ $report->links('pagination::bootstrap-4') }}
+                    </div>
+                </div> 
         </div>
     </div>
 

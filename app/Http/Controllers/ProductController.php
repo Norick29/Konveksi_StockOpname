@@ -21,7 +21,7 @@ class ProductController extends Controller
             $q->where('size', request('size'));
         })
         ->orderBy('id_produk')
-        ->get();
+        ->paginate(10);
 
         return view('modul.master.product.index', [
             'produk'   => $produk,
@@ -29,18 +29,45 @@ class ProductController extends Controller
         ]);
     }
 
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'id_kategori' => 'required|exists:kategoris,id_kategori',
+    //         'color' => 'required|string',
+    //         'size' => 'required|string',
+    //         'sku' => 'nullable|string'
+    //     ]);
+
+    //     Produk::create($request->all());
+
+    //     return back()->with('success', 'Product created successfully!');
+    // }
+
     public function store(Request $request)
     {
         $request->validate([
-            'id_kategori' => 'required|exists:kategoris,id_kategori',
-            'color' => 'required|string',
-            'size' => 'required|string',
-            'sku' => 'nullable|string'
+            'id_kategori' => 'required',
+            'color'       => 'required',
+            'sizes'       => 'required|array|min:1',
         ]);
 
-        Produk::create($request->all());
+        $kategori = Kategori::findOrFail($request->id_kategori);
 
-        return back()->with('success', 'Product created successfully!');
+        foreach ($request->sizes as $size) {
+
+            $sku = "{$kategori->name}-{$request->color}-{$size}";
+            
+            if (!Produk::where('sku', $sku)->exists()) {
+                Produk::create([
+                    'id_kategori' => $request->id_kategori,
+                    'color'       => $request->color,
+                    'size'        => $size,
+                    'sku'         => $sku,
+            ]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Produk berhasil ditambahkan');
     }
 
     public function update(Request $request, $id_produk)

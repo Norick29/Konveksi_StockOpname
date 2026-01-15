@@ -13,7 +13,11 @@ class ekspedisi extends Model
         'id_user',
         'date',
         'courier',
-        'quantity',
+        'quantity', 
+        'press_admin',
+        'resi_admin',
+        'packing_admin',
+        'buang_admin',
     ];
 
     public function toko()

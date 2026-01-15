@@ -84,57 +84,29 @@
 document.addEventListener('DOMContentLoaded', function () {
     @foreach($produk as $p)
     (function(id) {
-        const cat = document.getElementById('categorySelect' + id);
+        const cat   = document.getElementById('categorySelect' + id);
         const color = document.getElementById('colorSelect' + id);
-        const size = document.getElementById('sizeSelect' + id);
-        const skuInput = document.getElementById('skuInput' + id);
+        const size  = document.getElementById('sizeSelect' + id);
+        const sku   = document.getElementById('skuInput' + id);
 
-        if (!cat || !color || !size || !skuInput) return;
-
-        function mapCategoryCode(opt) {
-            if (!opt) return '';
-            const code = (opt.dataset.code || '').trim().toUpperCase();
-            if (code === 'SS' || code === 'LS') return code;
-            const text = (opt.textContent || opt.innerText || '').toLowerCase();
-            if (text.includes('short')) return 'SS';
-            if (text.includes('long')) return 'LS';
-            return code || (text.slice(0,2).toUpperCase());
-        }
-
-        function mapColorCode(val) {
-            if (!val) return '';
-            const v = val.toLowerCase();
-            if (v === 'Hitam' || v === 'Black') return 'HM';
-            if (v === 'Putih' || v === 'White') return 'PH';
-            return v.slice(0,2).toUpperCase();
-        }
-
-        function mapSizeCode(val) {
-            if (!val) return '';
-            return val.toUpperCase(); // S, M, L, XL, XXL
-        }
+        if (!cat || !color || !size || !sku) return;
 
         function genSKU() {
-            const catOpt = cat.options[cat.selectedIndex];
-            const catCode = mapCategoryCode(catOpt);
-            const colorCode = mapColorCode(color.value);
-            const sizeCode = mapSizeCode(size.value);
+            const catText = cat.options[cat.selectedIndex]?.text?.trim();
+            const colorVal = color.value?.trim();
+            const sizeVal  = size.value?.trim();
 
-            if (catCode && colorCode && sizeCode) {
-                skuInput.value = `${catCode}-${colorCode}-${sizeCode}`;
-            } else {
-                // keep existing sku (if any) or clear when fields incomplete
-                skuInput.value = skuInput.value && (catCode || colorCode || sizeCode) ? skuInput.value : '';
+            if (catText && colorVal && sizeVal) {
+                sku.value = `${catText}-${colorVal}-${sizeVal}`;
             }
         }
 
-        ['change','blur','keyup'].forEach(evt => {
+        ['change'].forEach(evt => {
             cat.addEventListener(evt, genSKU);
             color.addEventListener(evt, genSKU);
             size.addEventListener(evt, genSKU);
         });
 
-        // generate once when modal shown (Bootstrap/jQuery) or immediately if no jQuery
         if (window.jQuery) {
             $('#editProductModal' + id).on('shown.bs.modal', genSKU);
         } else {

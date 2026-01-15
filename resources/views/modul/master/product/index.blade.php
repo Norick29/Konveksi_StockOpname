@@ -103,7 +103,7 @@
                     <tbody>
                         @foreach($produk as $p)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $produk->firstItem() + $loop->index }}</td>
                             <td>{{ $p->kategori->name }}</td>
                             <td>{{ $p->color }}</td>
                             <td>{{ $p->size }}</td>
@@ -136,8 +136,17 @@
                         </tr>
                         @endif
                     </tbody>
+                </table> 
+                <div class="row mt-3">
+                    <div class="col-md-6 text-muted">
+                        Showing {{ $produk->firstItem() }} to {{ $produk->lastItem() }}
+                        of {{ $produk->total() }} products
+                    </div>
 
-                </table>
+                    <div class="col-md-6 d-flex justify-content-end">
+                        {{ $produk->links('pagination::bootstrap-4') }}
+                    </div>
+                </div>        
             </div>
         </div>
     </div>

@@ -20,6 +20,15 @@ class StockBathces extends Model
         'tanggal_masuk',
     ];
 
+    public function produk()
+    {
+        return $this->belongsTo(Produk::class, 'id_produk', 'id_produk');
+    }
+    public function toko()
+    {
+        return $this->belongsTo(Toko::class, 'id_toko', 'id_toko');
+    }
+
     public function sumberOpening()
     {
         return $this->belongsTo(stok_bulan::class, 'id_sumber', 'id_stok_bulan');
@@ -40,4 +49,6 @@ class StockBathces extends Model
     {
         return $query->orderBy('tanggal_masuk', 'asc');
     }
+
+    
 }

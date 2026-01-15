@@ -139,7 +139,16 @@
 
                     </tbody>
                 </table>
+                <div class="row mt-3">
+                    <div class="col-md-6 text-muted">
+                        Showing {{ $stok->firstItem() }} to {{ $stok->lastItem() }}
+                        of {{ $stok->total() }} entries
+                    </div>
 
+                    <div class="col-md-6 d-flex justify-content-end">
+                        {{ $stok->appends(request()->query())->links('pagination::bootstrap-4') }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
